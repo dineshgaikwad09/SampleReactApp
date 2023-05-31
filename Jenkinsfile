@@ -24,15 +24,20 @@ pipeline {
         }
         stage('Build Image') {
             steps {
-                sh 'npm run  build'
-            
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'DINESH_DOCKER_PASSWORD', usernameVariable: 'DINESH_DOCKER_USERNAME')]) {
+                    sh 'docker build -t dineshgaikwad09/SampleReactApp .'
+                    sh "echo $PASS | docker login -u $USER --password-stdin"
+                    sh 'docker push dineshgaikwad09/SampleReactApp'
+                }
             }
         }
         stage ('Deploy') {
-            steps {
-                echo 'Deploying the application'
-                
-            }
+            script {
+                    def dockerCmd = 'docker run  -p 3000:3000 -d dineshgaikwad09/SampleReactApp:latest'
+                    sshagent(['ec2-server-key']) {
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@54.152.95.30 ${dockerCmd}"
+                    }
+                }
         }
     }
 }                                                                                                                                                                                                        
