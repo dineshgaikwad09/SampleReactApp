@@ -29,15 +29,14 @@ pipeline {
                     sh "echo $PASS | docker login -u $USER --password-stdin"
                     sh 'docker push dineshgaikwad09/SampleReactApp'
                 }
+            
             }
         }
         stage ('Deploy') {
-            script {
-                    def dockerCmd = 'docker run  -p 3000:3000 -d dineshgaikwad09/SampleReactApp:latest'
-                    sshagent(['ec2-server-key']) {
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@54.152.95.30 ${dockerCmd}"
-                    }
-                }
+            steps {
+                echo 'Deploying the application'
+                
+            }
         }
     }
 }                                                                                                                                                                                                        
