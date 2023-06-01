@@ -25,12 +25,12 @@ pipeline {
             steps {
                 // sh 'npm run test'
                 echo 'run tests here'
-				apt-get -y update; 
-				apt-get install -y sudo; 
-				apt-get install -y git wget 
-				echo "Jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers 
-				wget http://get.docker.com/builds/Linux/x86_64/docker-latest.tgz 
-				tar -xvzf docker-latest.tgz 
+				apt-get -y update
+				apt-get install -y sudo
+				apt-get install -y git wget
+				echo "Jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
+				wget http://get.docker.com/builds/Linux/x86_64/docker-latest.tgz
+				tar -xvzf docker-latest.tgz
 				mv docker/* /home/jenkins/agent/
             }
         }
