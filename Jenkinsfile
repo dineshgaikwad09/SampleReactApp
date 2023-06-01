@@ -17,6 +17,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+				docker info
                 sh 'npm install'
                 sh 'npm run build'
             }
