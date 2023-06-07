@@ -1,12 +1,15 @@
 pipeline {
-    agent {
-        myDocker { image 'node:18.16.0-alpine' }
-    }
-    stages {
-        stage('Test') {
-            steps {
-                sh 'node --version'
-            }
+	agent none
+  stages {
+  	stage('Maven Install') {
+    	agent {
+      	docker {
+        	image 'maven:3.5.0'
         }
+      }
+      steps {
+      	sh 'mvn clean install'
+      }
     }
+  }
 }
